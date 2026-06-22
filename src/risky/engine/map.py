@@ -76,14 +76,14 @@ class GameMap:
         data = json.loads(resources.files("risky.data").joinpath("classic.json").read_text())
         return GameMap.from_dict(data)
     
-    def to_dict(gm: GameMap) -> dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "territories": {
                 name: {"continent": t.continent, "adjacent": list(t.adjacent)}
-                for name, t in gm.territories.items()
+                for name, t in self.territories.items()
             },
             "continents": {
                 name: {"bonus": c.bonus, "territories": list(c.territories)}
-                for name, c in gm.continents.items()
+                for name, c in self.continents.items()
             },
         }
