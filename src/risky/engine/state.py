@@ -33,7 +33,7 @@ class GameState():
     player_hands : dict[str, tuple[Card, ...]]
     deck : tuple[Card, ...]
     discards : tuple[Card, ...]
-    trade_in_count : int = 0
+    trade_in_counts : dict[str, int] = field(default_factory=dict)
     current_player : str = "P1"
     current_phase : Phase = Phase.DEPLOY
     eliminated : frozenset[str] = field(default_factory=frozenset)
@@ -48,7 +48,7 @@ class GameState():
             player_hands = {p: tuple(h) for p, h in self.player_hands.items()},
             deck = self.deck,
             discards = self.discards,
-            trade_in_count = self.trade_in_count,
+            trade_in_counts = self.trade_in_counts,
             current_player = self.current_player,
             current_phase = self.current_phase,
             eliminated = self.eliminated,
@@ -66,7 +66,7 @@ class GameState():
             and self.player_hands == other.player_hands
             and self.deck == other.deck
             and self.discards == other.discards
-            and self.trade_in_count == other.trade_in_count
+            and self.trade_in_counts == other.trade_in_counts
             and self.current_player == other.current_player
             and self.current_phase == other.current_phase
             and self.eliminated == other.eliminated
@@ -135,7 +135,7 @@ class GameState():
             },
             "deck": [{"territory": c.territory, "symbol": c.symbol.value} for c in self.deck],
             "discards": [{"territory": c.territory, "symbol": c.symbol.value} for c in self.discards],
-            "trade_in_count": self.trade_in_count,
+            "trade_in_counts": self.trade_in_counts,
             "current_player": self.current_player,
             "current_phase": self.current_phase.value,
             "eliminated": list(self.eliminated),
@@ -158,7 +158,7 @@ class GameState():
             },
             deck=tuple(Card(territory=c["territory"], symbol=Symbol(c["symbol"])) for c in data["deck"]),
             discards=tuple(Card(territory=c["territory"], symbol=Symbol(c["symbol"])) for c in data["discards"]),
-            trade_in_count=data["trade_in_count"],
+            trade_in_counts=data["trade_in_counts"],
             current_player=data["current_player"],
             current_phase=Phase(data["current_phase"]),
             eliminated=frozenset(data["eliminated"]),

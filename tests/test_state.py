@@ -16,7 +16,7 @@ def _make_state(
     player_hands: dict[str, tuple[Card, ...]] | None = None,
     deck: tuple[Card, ...] | None = None,
     discards: tuple[Card, ...] | None = None,
-    trade_in_count: int = 0,
+    trade_in_counts: dict[str, int] = {"P1": 0},
     current_player: str = "P1",
     current_phase: Phase = Phase.DEPLOY,
     eliminated: frozenset[str] | None = None,
@@ -33,7 +33,7 @@ def _make_state(
         player_hands=player_hands if player_hands is not None else {},
         deck=deck if deck is not None else (),
         discards=discards if discards is not None else (),
-        trade_in_count=trade_in_count, current_player=current_player,
+        trade_in_counts=trade_in_counts, current_player=current_player,
         current_phase=current_phase,
         eliminated=eliminated if eliminated is not None else frozenset(),
         turn_number=turn_number, conquered_this_turn=conquered_this_turn,
@@ -131,7 +131,7 @@ def test_serialization_roundtrip():
     assert reloaded.current_phase == state.current_phase
     assert reloaded.turn_number == state.turn_number
     assert reloaded.conquered_this_turn == state.conquered_this_turn
-    assert reloaded.trade_in_count == state.trade_in_count
+    assert reloaded.trade_in_counts == state.trade_in_counts
 
 def test_full_map_in_state():
     gm = GameMap.classic()
