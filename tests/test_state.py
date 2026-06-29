@@ -95,6 +95,16 @@ def test_continent_owner_partial():
 def test_continent_held_count():
     state = _make_state(owners={"A": "P1", "B": "P2"}, current_player="P1")
     assert state.continent_held_count("TestCont") == (1, 2)
+    state = _make_state(owners={"A": "P2", "B": "P2"}, current_player="P1")
+    assert state.continent_held_count("TestCont") == (0, 2)
+    state = _make_state(owners={"A": "P1", "B": "P1"}, current_player="P1")
+    assert state.continent_held_count("TestCont") == (2, 2)
+
+def test_continent_held_count_for_other_player():
+    state = _make_state(owners={"A": "P1", "B": "P2"}, current_player="P1")
+    assert state.continent_held_count("TestCont", player="P2") == (1, 2)
+    state = _make_state(owners={"A": "P2", "B": "P2"}, current_player="P1")
+    assert state.continent_held_count("TestCont", player="P2") == (2, 2)
 
 def test_is_game_over_false():
     state = _make_state(owners={"A": "P1", "B": "P2"})

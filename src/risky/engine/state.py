@@ -76,8 +76,8 @@ class GameState():
     
     __hash__ = None # type: ignore[assignment]
 
-    def territory_owner(self, name: str) -> str | None:
-        return self.owners[name]
+    def territory_owner(self, territory_name: str) -> str | None:
+        return self.owners.get(territory_name)
     
     def player_territories(self, player: str) -> frozenset[str]:
         return frozenset({t for t, o in self.owners.items() if o == player})
@@ -95,12 +95,13 @@ class GameState():
                 return None
         return owner
     
-    def continent_held_count(self, continent_name: str) -> tuple[int, int]:
+    def continent_held_count(self, continent_name: str, player: str | None = None) -> tuple[int, int]:
         """Return (territories held by current_player in continent, total in continent)."""
         cont = self.map.continents[continent_name]
+        target = player if player is not None else self.current_player
         a, b = 0, 0
         for t in cont.territories:
-            if self.owners[t] == self.current_player:
+            if self.owners[t] == target:
                 a += 1
             b += 1
         return (a, b)
