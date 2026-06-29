@@ -16,7 +16,7 @@ def _make_state(
     player_hands: dict[str, tuple[Card, ...]] | None = None,
     deck: tuple[Card, ...] | None = None,
     discards: tuple[Card, ...] | None = None,
-    trade_in_counts: dict[str, int] = {"P1": 0},
+    trade_in_counts: dict[str, int] | None = None,
     current_player: str = "P1",
     current_phase: Phase = Phase.DEPLOY,
     eliminated: frozenset[str] | None = None,
@@ -24,6 +24,8 @@ def _make_state(
     conquered_this_turn: bool = False,
 ) -> GameState:
     gm = map if map is not None else _tiny_map()
+    if trade_in_counts is None:
+        trade_in_counts = {"P1": 0}
     if owners is None:
         owners = {t: "P1" for t in gm.territories}
     if armies is None:
