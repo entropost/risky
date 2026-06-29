@@ -106,6 +106,33 @@ def test_continent_held_count_for_other_player():
     state = _make_state(owners={"A": "P2", "B": "P2"}, current_player="P1")
     assert state.continent_held_count("TestCont", player="P2") == (2, 2)
 
+def test_base_reinforcement():
+    gm = _tiny_map()
+    owners = {t: "P1" for t in gm.territories}
+    state = _make_state(map=gm, owners=owners)
+    assert state.base_reinforcement("P1") == 3
+
+def test_base_reinforcement_42_territories():
+    gm = GameMap.classic()
+    owners = {t: "P1" for t in gm.territories}
+    armies = {t: 1 for t in gm.territories}
+    state = _make_state(map=gm, owners=owners, armies=armies)
+    assert state.base_reinforcement("P1") == 14
+
+def test_base_reinforcement_11_territories():
+    gm = GameMap.classic()
+    some = list(gm.territories.keys())[:11]
+    others = list(gm.territories.keys())[11:]
+    owners = {}
+    for t in some:
+        owners[t] = "P1"
+    for t in others:
+        owners[t] = "P2"
+    armies = {t: 1 for t in gm.territories}
+    state = _make_state(map=gm, owners=owners, armies=armies)
+    assert state.base_reinforcement("P1") == 3
+    assert state.base_reinforcement("P2") == 10
+
 def test_is_game_over_false():
     state = _make_state(owners={"A": "P1", "B": "P2"})
     assert state.is_game_over() is False

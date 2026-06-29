@@ -113,6 +113,10 @@ class GameState():
                 res += self.armies[t]
         return res
     
+    def base_reinforcement(self, player: str | None = None) -> int:
+        p = player if player is not None else self.current_player
+        return max(3, self.territory_count(p) // 3)
+
     #TODO: Verify the function logic; probably to be refactored in the future
     def is_game_over(self) -> bool:
         """Game ends when <= 1 player remains uneliminated."""
