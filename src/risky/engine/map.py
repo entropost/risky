@@ -40,7 +40,7 @@ class GameMap:
                 if neighbor not in self.territories:
                     errors.append(f"Territory {t_name!r} lists non-existent neighbor {neighbor!r}")
                 elif t_name not in self.territories[neighbor].adjacent:
-                    errors.append(f"Territory {t_name!r} claims neighbot {neighbor!r}, but neighbor does not")
+                    errors.append(f"Territory {t_name!r} claims neighbor {neighbor!r}, but neighbor does not")
             if t_name in terr.adjacent:
                 errors.append(f"Territory {t_name!r} is adjacent to itself")
             if not terr.adjacent:

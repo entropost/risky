@@ -68,7 +68,7 @@ def validate_attack(state: GameState, action: AttackAction) -> list[str]:
 
     target_owner = state.territory_owner(action.target)
     if target_owner is None:
-        errors.append(f"Target territory '{action.target} does not exist'")
+        errors.append(f"Target territory '{action.target}' does not exist")
     if target_owner == action.player:
         errors.append(f"Target territory '{action.target}' must be owned by another player")
 
@@ -121,7 +121,7 @@ def validate_fortify(state: GameState, action: FortifyAction) -> list[str]:
     if source_owner == action.player and action.source in state.armies:
         source_armies = state.armies[action.source]
         if action.army_count >= source_armies:
-            errors.append(f"Cannot transfer {action.army_count} from '{action.source}'; must leave at least 1 army behind (has {source_armies})s")
+            errors.append(f"Cannot transfer {action.army_count} from '{action.source}'; must leave at least 1 army behind (has {source_armies})")
 
     if not errors:
         if not has_friendly_path(state, action.source, action.target, action.player):
