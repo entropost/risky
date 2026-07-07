@@ -44,7 +44,7 @@ def create_deck(map: GameMap, wild_count: int = 2) -> tuple[Card, ...]:
         else:
             cards.append(Card(territory=names[i], symbol=Symbol.ARTILLERY))
     
-    for _ in range(wild_count):
+    for _ in range(max(0, wild_count)):
         cards.append(Card(territory=None, symbol=Symbol.WILD))
 
     return tuple(cards)
