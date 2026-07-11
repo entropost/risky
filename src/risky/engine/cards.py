@@ -140,7 +140,8 @@ def fixed_trade_value(kind: SetKind, values: dict[SetKind, int] | None = None) -
 
 def territory_bonus(indices: tuple[int, int, int], hand: tuple[Card, ...], state: GameState, player: str) \
                     -> tuple[int, str | None]:
-    for idx in sorted(indices):
+    # TODO: Change the implementation so indices should not be sorted; first matching card-territory gets the bonus
+    for idx in indices:
         card = hand[idx]
         if card.territory is None:
             continue

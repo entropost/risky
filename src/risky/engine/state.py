@@ -48,7 +48,7 @@ class GameState():
             player_hands = {p: tuple(h) for p, h in self.player_hands.items()},
             deck = self.deck,
             discards = self.discards,
-            trade_in_counts = self.trade_in_counts,
+            trade_in_counts = dict(self.trade_in_counts),
             current_player = self.current_player,
             current_phase = self.current_phase,
             eliminated = self.eliminated,
